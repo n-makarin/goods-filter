@@ -81,7 +81,7 @@ export default {
 <style lang="scss" scoped>
 .goods {
   &__filter {
-    max-width: 600px;
+    max-width: 800px;
   }
 }
 </style>
