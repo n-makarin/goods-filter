@@ -1,6 +1,7 @@
 <template>
   <div class="goods">
     <h1>Список товаров</h1>
+    <goods-filter class="goods__filter" />
     <goods-list :data="goods" />
   </div>
 </template>
@@ -8,10 +9,12 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import GoodsList from '@/components/goods/list'
+import GoodsFilter from '@/components/goods/filter'
 
 export default {
   components: {
-    GoodsList
+    GoodsList,
+    GoodsFilter
   },
   data () {
     return {
@@ -66,9 +69,19 @@ export default {
   },
   async mounted () {
     await this.getGoods(this.query)
+  },
+  watch: {
+    async query (newValue) {
+      await this.getGoods(newValue)
+    }
   }
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="scss" scoped>
+.goods {
+  &__filter {
+    max-width: 600px;
+  }
+}
 </style>
