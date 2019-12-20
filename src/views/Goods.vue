@@ -58,13 +58,34 @@ export default {
      */
     getQueryString (routeQuery, queryParam) {
       let result = ''
-      const query = `${queryParam}=${routeQuery[queryParam]}`
+      let query = ''
+      const queryValue = routeQuery[queryParam]
+      if (Array.isArray(queryValue)) {
+        query = this.getQueryWithMultipleParams(queryValue, queryParam)
+      } else {
+        query = `${queryParam}=${queryValue}`
+      }
+
       if (this.queryNumber === 0) {
         result = `?${query}`
       } else {
         result = `${result}&${query}`
       }
       return result
+    },
+    /**
+     * Get query with multiple params of some category
+     * @param {object} routeQuery
+     * @param {string} queryParam
+     * @returns {string}
+     */
+    getQueryWithMultipleParams (queryValue, queryParam) {
+      let query = ''
+      queryValue.forEach((element) => {
+        query = query ? `${query}&` : ''
+        query = `${query}${queryParam}=${element}`
+      })
+      return query
     }
   },
   async mounted () {
