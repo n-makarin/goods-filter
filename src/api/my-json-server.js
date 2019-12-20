@@ -3,7 +3,7 @@
  */
 import axios from 'axios'
 
-const endpoint = 'https://my-json-server.typicode.com/n-makarin/goods-filter'
+const endpoint = 'https://my-json-server.typicode.com/n-makarin/goods-filter/'
 const myJsonServer = {
   /**
    * Get current weather by city name
@@ -15,7 +15,7 @@ const myJsonServer = {
     let rawData = null
     const url = `${endpoint}${path}${query}`
     await axios({
-      method: method,
+      method: 'GET',
       url
     })
       .catch((error) => {
