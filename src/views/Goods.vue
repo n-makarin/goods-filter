@@ -1,14 +1,17 @@
 <template>
   <div class="goods">
     <h1>Список товаров</h1>
+    <goods-list :data="goods" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import GoodsList from '@/components/goods/list'
 
 export default {
   components: {
+    GoodsList
   },
   computed: {
     ...mapGetters({
