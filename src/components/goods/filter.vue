@@ -50,8 +50,8 @@ export default {
   },
   data () {
     return {
-      categoryValue: '',
-      brandValue: '',
+      categoryValue: [],
+      brandValue: [],
       categoryOptions: [
         { name: 'Phone' },
         { name: 'Tablet' },
@@ -63,6 +63,44 @@ export default {
         { name: 'Xiaomi' },
         { name: 'Oppo' }
       ]
+    }
+  },
+  computed: {
+    query () {
+      const categoryQuery = this.getCategoryQuery()
+      const brandQuery = this.getBrandyQuery()
+      let result = categoryQuery + brandQuery
+      result = result.replace('&', '?')
+      return result
+    }
+  },
+  methods: {
+    /**
+     * Iterate category values to get query
+     * @returns {string}
+     */
+    getCategoryQuery () {
+      let result = ''
+      this.categoryValue.forEach((element) => {
+        result = `${result}&category=${element.name}`
+      })
+      return result
+    },
+    /**
+     * Iterate brand values to get query
+     * @returns {string}
+     */
+    getBrandyQuery () {
+      let result = ''
+      this.brandValue.forEach((element) => {
+        result = `${result}&brand=${element.name}`
+      })
+      return result
+    }
+  },
+  watch: {
+    query (newValue) {
+      this.$emit('select', newValue)
     }
   }
 }
