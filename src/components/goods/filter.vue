@@ -204,7 +204,7 @@ export default {
   &__reset {
     align-self: flex-start;
     display: inline-block;
-    border: 1px solid rgb(204, 204, 204);
+    border: 1px solid #e8e8e8;
     padding: 9px 18px;
     border-radius: 3px;
     text-align: center;
