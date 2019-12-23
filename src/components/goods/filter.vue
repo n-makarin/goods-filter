@@ -4,7 +4,7 @@
       <label for="category">Категории: </label>
       <multiselect
         id="category"
-        v-model="categoryValue"
+        v-model="categoryLocalValue"
         :options="categoryOptions"
         :multiple="true"
         :close-on-select="false"
@@ -20,7 +20,7 @@
       <label for="brands">Бренды: </label>
       <multiselect
         id="brands"
-        v-model="brandValue"
+        v-model="brandLocalValue"
         :options="brandOptions"
         :multiple="true"
         :close-on-select="false"
@@ -50,8 +50,6 @@ export default {
   },
   data () {
     return {
-      categoryValue: [],
-      brandValue: [],
       categoryOptions: [
         { name: 'Phone' },
         { name: 'Tablet' },
@@ -62,46 +60,91 @@ export default {
         { name: 'Samsung' },
         { name: 'Xiaomi' },
         { name: 'Oppo' }
-      ]
+      ],
+      categoryLocalValue: [],
+      brandLocalValue: []
     }
   },
   computed: {
-    query () {
-      const categoryQuery = this.getCategoryQuery()
-      const brandQuery = this.getBrandyQuery()
-      let result = categoryQuery + brandQuery
-      result = result.replace('&', '?')
-      return result
+    /**
+     * Result of filtration as a path to which we need to redirect
+     * after select some values
+     * @returns {string}
+     */
+    pathToRedirectByQuery () {
+      let result = ''
+      const categoryQuery = this.getCategoryPath()
+      const brandQuery = this.getBrandPath()
+      if (!categoryQuery && !brandQuery) { return result }
+      return (categoryQuery + brandQuery).replace('&', '?')
     }
   },
   methods: {
     /**
-     * Iterate category values to get query
+     * Get some query from route.query object
+     * @returns {object}
+     */
+    getQueryByRoute (property) {
+      let result = []
+      const query = this.$route.query[property]
+      if (Array.isArray(query)) {
+        query.forEach((element) => {
+          result.push({ name: element })
+        })
+      } else {
+        result.push({ name: query })
+      }
+      return result
+    },
+    /**
+     * Iterate category values to get path string
      * @returns {string}
      */
-    getCategoryQuery () {
+    getCategoryPath () {
       let result = ''
-      this.categoryValue.forEach((element) => {
+      this.categoryLocalValue.forEach((element) => {
         result = `${result}&category=${element.name}`
       })
       return result
     },
     /**
-     * Iterate brand values to get query
+     * Iterate brand values to get path string
      * @returns {string}
      */
-    getBrandyQuery () {
+    getBrandPath () {
       let result = ''
-      this.brandValue.forEach((element) => {
+      this.brandLocalValue.forEach((element) => {
         result = `${result}&brand=${element.name}`
       })
       return result
+    },
+    /**
+     * Set categoryLocalValue by current $route.query
+     * @returns void
+     */
+    setCategoryLocalValue () {
+      const category = this.getQueryByRoute('category')
+      if (!category || !category[0].name) { return }
+      this.categoryLocalValue = category
+    },
+    /**
+     * Set brandLocalValue by current $route.query
+     * @returns void
+     */
+    setBrandLocalValue () {
+      const brand = this.getQueryByRoute('brand')
+      if (!brand || !brand[0].name) { return }
+      this.brandLocalValue = brand
     }
   },
   watch: {
-    query (newValue) {
+    pathToRedirectByQuery (newValue) {
       this.$emit('select', newValue)
     }
+  },
+  mounted () {
+    this.setCategoryLocalValue()
+    this.setBrandLocalValue()
   }
 }
 </script>
