@@ -152,7 +152,13 @@ export default {
 <style lang="scss">
 .filter {
   display: flex;
+  justify-content: center;
   height: 51px;
+  @media screen and (max-width: 991px) {
+    flex-wrap: wrap;
+    font-size: 14px;
+    height: 80px;
+  }
   .multiselect {
     @include vue-multiselect;
     width: 100%;
@@ -164,9 +170,16 @@ export default {
     label {
       margin-right: 10px;
       margin-top: 8px;
+      @media screen and (max-width: 991px) {
+        display: none;
+      }
     }
     &:first-child {
       margin-right: 20px;
+      @media screen and (max-width: 991px) {
+        margin-right: 0;
+        margin-bottom: 5px;
+      }
     }
   }
 }
