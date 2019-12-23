@@ -2,7 +2,8 @@
   <div class="goods">
     <h1>Список товаров</h1>
     <goods-filter class="goods__filter" @select="redirect" />
-    <goods-list :data="goods" />
+    <goods-list class="goods__list" :data="goods" />
+    <div class="goods__message-empty" v-if="!goods || goods.length === 0">Товары не найдены</div>
   </div>
 </template>
 
