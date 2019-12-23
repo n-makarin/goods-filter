@@ -30,7 +30,9 @@ export default {
       getGoods: 'goods/list/get'
     }),
     redirect (query) {
-      this.$router.push(`/goods${query}`)
+      const targetPath = `/goods${query}`
+      if (this.$route.fullPath === targetPath) { return }
+      this.$router.push(targetPath)
     }
   },
   async mounted () {
