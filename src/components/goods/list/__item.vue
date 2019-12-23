@@ -31,14 +31,16 @@ export default {
 
 <style scoped lang="scss">
 .item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-width: 150px;
   padding: 20px;
   border: 1px solid rgb(196, 196, 196);
   border-radius: 3px;
+  text-align: center;
   & > div, a {
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     &:last-child {
       margin-bottom: 0;
     }
