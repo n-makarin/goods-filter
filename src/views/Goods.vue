@@ -1,6 +1,6 @@
 <template>
   <div class="goods">
-    <h1>Список товаров</h1>
+    <h1 class="goods__title">Список товаров</h1>
     <goods-filter class="goods__filter" @select="redirect" />
     <goods-list class="goods__list" :data="goods" />
     <div class="goods__message-empty" v-if="!goods || goods.length === 0">Товары не найдены</div>
@@ -49,6 +49,9 @@ export default {
 
 <style lang="scss" scoped>
 .goods {
+  &__title {
+    text-align: center;
+  }
   &__filter {
     max-width: 800px;
   }
