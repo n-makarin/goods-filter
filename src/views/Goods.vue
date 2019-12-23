@@ -3,7 +3,12 @@
     <h1 class="goods__title">Список товаров</h1>
     <goods-filter class="goods__filter" @select="redirect" />
     <goods-list class="goods__list" :data="goods" />
-    <div class="goods__message-empty" v-if="!goods || goods.length === 0">Товары не найдены</div>
+    <div
+      class="goods__message-empty"
+      v-if="showMessageEmpty"
+    >
+      Товары не найдены
+    </div>
   </div>
 </template>
 
@@ -24,6 +29,14 @@ export default {
     query () {
       const path = this.$route.path
       return this.$route.fullPath.replace(path, '')
+    },
+    showMessageEmpty () {
+      return this.dataLoaded && (!this.goods || this.goods.length === 0)
+    }
+  },
+  data () {
+    return {
+      dataLoaded: false
     }
   },
   methods: {
@@ -38,6 +51,7 @@ export default {
   },
   async mounted () {
     await this.getGoods(this.query)
+    this.dataLoaded = true
   },
   watch: {
     async query (newValue) {
