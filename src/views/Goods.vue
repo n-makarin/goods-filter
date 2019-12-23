@@ -52,5 +52,9 @@ export default {
   &__title {
     text-align: center;
   }
+  &__message-empty {
+    margin-top: 30px;
+    text-align: center;
+  }
 }
 </style>
