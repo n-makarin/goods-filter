@@ -3,6 +3,7 @@
     <item
       v-for="item in data"
       :key="item.id"
+      :id="item.id"
       :name="item.name"
       :category="item.category"
       :brand="item.brand"
