@@ -52,8 +52,5 @@ export default {
   &__title {
     text-align: center;
   }
-  &__filter {
-    max-width: 800px;
-  }
 }
 </style>
