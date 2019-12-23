@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div class="item__name">{{ name }}</div>
+    <router-link :to="`/goods/${id}`" class="item__name">{{ name }}</router-link>
     <div class="item__category">{{ category }}</div>
     <div class="item__brand">{{ brand }}</div>
   </div>
@@ -37,11 +37,14 @@ export default {
   padding: 20px;
   border: 1px solid rgb(196, 196, 196);
   border-radius: 3px;
-  & > div {
+  & > div, a {
     margin-bottom: 10px;
     &:last-child {
       margin-bottom: 0;
     }
+  }
+  &__name {
+    display: block;
   }
 }
 </style>
