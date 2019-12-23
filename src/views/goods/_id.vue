@@ -1,12 +1,14 @@
 <template>
   <div class="goods-item">
     <a href="javascript:void(0);" class="goods-item__back" @click="back">Назад</a>
-    <div v-if="hasData" class="goods-item__element">
-      <div class="goods-item__name">{{ data.name }}</div>
-      <div class="goods-item__category">{{ data.category }}</div>
-      <div class="goods-item__brand">{{ data.brand }}</div>
+    <div v-if="dataLodaded">
+      <div v-if="hasData" class="goods-item__element">
+        <div class="goods-item__name">{{ data.name }}</div>
+        <div class="goods-item__category">{{ data.category }}</div>
+        <div class="goods-item__brand">{{ data.brand }}</div>
+      </div>
+      <div class="goods-item__message-empty" v-else>Товар не найден</div>
     </div>
-    <div class="goods-item__message-empty" v-else>Товар не найден</div>
   </div>
 </template>
 
@@ -29,11 +31,13 @@ export default {
   },
   data () {
     return {
-      hasData: true
+      hasData: true,
+      dataLodaded: false
     }
   },
   async mounted () {
     await this.getData(this.$route.params.id)
+    this.dataLodaded = true
     if (!this.data || this.data.length === 0) {
       this.hasData = false
     }
