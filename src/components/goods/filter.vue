@@ -1,37 +1,40 @@
 <template>
   <div class="filter">
-    <div class="filter__item">
-      <label for="category">Категории: </label>
-      <multiselect
-        id="category"
-        v-model="categoryLocalValue"
-        :options="categoryOptions"
-        :multiple="true"
-        :close-on-select="false"
-        :clear-on-select="false"
-        :preserve-search="true"
-        placeholder="Выберите категории"
-        label="name"
-        track-by="name"
-        class="filter__category"
-      />
+    <div class="filter__wrapper">
+      <div class="filter__item">
+        <label for="category">Категории: </label>
+        <multiselect
+          id="category"
+          v-model="categoryLocalValue"
+          :options="categoryOptions"
+          :multiple="true"
+          :close-on-select="false"
+          :clear-on-select="false"
+          :preserve-search="true"
+          placeholder="Выберите категории"
+          label="name"
+          track-by="name"
+          class="filter__category"
+        />
+      </div>
+      <div class="filter__item">
+        <label for="brands">Бренды: </label>
+        <multiselect
+          id="brands"
+          v-model="brandLocalValue"
+          :options="brandOptions"
+          :multiple="true"
+          :close-on-select="false"
+          :clear-on-select="false"
+          :preserve-search="true"
+          placeholder="Выберите бренды"
+          label="name"
+          track-by="name"
+          class="filter__brand"
+        />
+      </div>
     </div>
-    <div class="filter__item">
-      <label for="brands">Бренды: </label>
-      <multiselect
-        id="brands"
-        v-model="brandLocalValue"
-        :options="brandOptions"
-        :multiple="true"
-        :close-on-select="false"
-        :clear-on-select="false"
-        :preserve-search="true"
-        placeholder="Выберите бренды"
-        label="name"
-        track-by="name"
-        class="filter__brand"
-      />
-    </div>
+    <div @click="reset" class="filter__reset">Сбросить</div>
   </div>
 </template>
 
@@ -135,6 +138,10 @@ export default {
       const brand = this.getQueryByRoute('brand')
       if (!brand || !brand[0].name) { return }
       this.brandLocalValue = brand
+    },
+    reset () {
+      this.categoryLocalValue = []
+      this.brandLocalValue = []
     }
   },
   watch: {
@@ -152,12 +159,24 @@ export default {
 <style lang="scss">
 .filter {
   display: flex;
-  justify-content: center;
-  height: 51px;
   @media screen and (max-width: 991px) {
     flex-wrap: wrap;
-    font-size: 14px;
-    height: 80px;
+    justify-content: center;
+  }
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    height: 51px;
+    flex-grow: 1;
+    margin-right: 15px;
+    @media screen and (max-width: 991px) {
+      flex-wrap: wrap;
+      font-size: 14px;
+      height: 80px;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-right: 0px;
+    }
   }
   .multiselect {
     @include vue-multiselect;
@@ -180,6 +199,24 @@ export default {
         margin-right: 0;
         margin-bottom: 5px;
       }
+    }
+  }
+  &__reset {
+    align-self: flex-start;
+    display: inline-block;
+    border: 1px solid rgb(204, 204, 204);
+    padding: 9px 18px;
+    border-radius: 3px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .1s;
+    &:hover {
+      background: rgb(248, 248, 248);
+    }
+    @media screen and (max-width: 991px) {
+      font-size: 12px;
+      padding: 6px 12px;
     }
   }
 }
